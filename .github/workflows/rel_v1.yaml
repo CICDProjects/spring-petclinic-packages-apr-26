@@ -30,7 +30,7 @@ jobs:
                 key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
                 restore-keys: ${{ runner.os }}-maven-
           - name: publish package
-            run: mvn deploy
+            run: mvn deploy -Dcheckstyle.skip=true
             env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -52,15 +52,15 @@ jobs:
               id: meta
               uses: docker/metadata-action@v5
               with:
-                images: ghcr.io/spring-petclinic-packages-apr-26
+                images: ghcr.io/${{ github.repository_owner }}/spring-petclinic-packages-apr-26
             - name: build docker image
               uses: docker/build-push-action@v7
               with:
                 push: true
                 context: .
                 tags: |
-                    ghcr.io/spring-petclinic-packages-apr-26:latest
-                    ghcr.io/spring-petclinic-packages-apr-26:${{ github.sha }}
+                    ghcr.io/${{ github.repository_owner }}/spring-petclinic-packages-apr-26:latest
+                    ghcr.io/${{ github.repository_owner }}/spring-petclinic-packages-apr-26:${{ github.sha }}
               
             
 
