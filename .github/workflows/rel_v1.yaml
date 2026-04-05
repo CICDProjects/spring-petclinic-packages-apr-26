@@ -40,6 +40,10 @@ jobs:
 
     docker-build-job:
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            packages: write
+            security-events: write
         steps:
             - name: get the code
               uses: actions/checkout@v4      # v6 does not exist; latest stable is v4
